@@ -10,13 +10,14 @@ for instance in $@
 do
 
     echo "creating instance: $instance"
-    instance_id=(aws ec2 run-instances \
-        --image-id $ami_id \
-        --instance-type $instance_type \
-        --security-groups "roboshop-common" "roboshop-$instance" \
-        --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-$instance}]" \
-        --query "Instances[0].InstanceId" \
-        --output text
+    instance_id=(
+        aws ec2 run-instances \
+            --image-id $ami_id \
+            --instance-type $instance_type \
+            --security-groups "roboshop-common" "roboshop-$instance" \
+            --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=roboshop-$instance}]" \
+            --query "Instances[0].InstanceId" \
+            --output text
     )
 
     echo " $? $instance created InstanceId: $instance_id"
