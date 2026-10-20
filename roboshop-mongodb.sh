@@ -25,7 +25,7 @@ validate(){
          echo -e "${R}Error${N} in $2"
          exit 1
     else 
-        echo -e "{G}SUCCESS${N}: $2"
+        echo -e "${G}SUCCESS${N}: $2"
     fi
 }
 
