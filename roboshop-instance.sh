@@ -45,7 +45,7 @@ do
 
     # 
     aws route53 change-resource-record-sets \
-      --hosted-zone-id YOUR_HOSTED_ZONE_ID \
+      --hosted-zone-id $hosted_zone_id \
       --change-batch '{
         "Comment": "Creating record for EC2 instance",
         "Changes": [
