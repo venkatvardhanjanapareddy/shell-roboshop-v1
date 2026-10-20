@@ -1,9 +1,9 @@
 #!/bin/bash
 
-ami_id=ami-0055977a6e828a4f4
-instance_type=t3.micro
-domain_name=vardhandaws.online
-hosted_zone_id=Z07166913431ZYKE9ODG1
+ami_id="ami-0055977a6e828a4f4"
+instance_type="t3.micro"
+domain_name="vardhandaws.online"
+hosted_zone_id="Z07166913431ZYKE9ODG1"
 
 
 for instance in $@
