@@ -24,5 +24,48 @@ do
 
 
     #  to get the public ip for frontend and private for remaining instances
+
+    if [ $instance -ne "frontend"]; then
+        INSTANCE_IP=$(aws ec2 describe-instances \
+            --instance-ids $instance_id \
+            --query "Reservations[*].Instances[*].PublicIpAddress" \
+            --output text)
+    echo "Instance ip for frontend $INSTANCE_IP"
+    route53=$domain_name
+    else
+        INSTANCE_IP=$(aws ec2 describe-instances \
+            --instance-ids $instance_id \
+            --query "Reservations[*].Instances[*].PrivateIpAddress" \
+            --output text)
+    echo "Instance ip NOT for frontend $INSTANCE_IP"
+        route53=${instance}.$domain_name
+
+    fi
+
+
+    # 
+    aws route53 change-resource-record-sets \
+      --hosted-zone-id YOUR_HOSTED_ZONE_ID \
+      --change-batch '{
+        "Comment": "Creating record for EC2 instance",
+        "Changes": [
+          {
+            "Action": "UPSERT",
+            "ResourceRecordSet": {
+              "Name": "'"$route53"'",
+              "Type": "A",
+              "TTL": 1,
+              "ResourceRecords": [
+                {
+                  "Value": "'"$INSTANCE_IP"'"
+                }
+              ]
+            }
+          }
+        ]
+      }'
+
+echo " $? Updated the route53 for $instance"
+
 done
 
