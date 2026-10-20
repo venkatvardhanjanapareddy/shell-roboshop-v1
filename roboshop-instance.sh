@@ -30,15 +30,15 @@ do
             --instance-ids $instance_id \
             --query "Reservations[*].Instances[*].PrivateIpAddress" \
             --output text)
-    echo "Instance ip for frontend $INSTANCE_IP"
-    route53=$domain_name
+    echo "Instance ip NOT for frontend $INSTANCE_IP"
+    route53=${instance}.$domain_name
     else
         INSTANCE_IP=$(aws ec2 describe-instances \
             --instance-ids $instance_id \
             --query "Reservations[*].Instances[*].PublicIpAddress" \
             --output text)
-    echo "Instance ip NOT for frontend $INSTANCE_IP"
-        route53=${instance}.$domain_name
+    echo "Instance ip for frontend $INSTANCE_IP"
+        route53=$domain_name
 
     fi
 
