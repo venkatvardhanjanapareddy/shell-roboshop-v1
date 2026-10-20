@@ -25,7 +25,7 @@ do
 
     #  to get the public ip for frontend and private for remaining instances
 
-    if [ $instance -ne "frontend"]; then
+    if [ $instance != "frontend" ]; then
         INSTANCE_IP=$(aws ec2 describe-instances \
             --instance-ids $instance_id \
             --query "Reservations[*].Instances[*].PublicIpAddress" \
