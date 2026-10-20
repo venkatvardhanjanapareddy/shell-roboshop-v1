@@ -19,29 +19,9 @@ do
         --output text
     )
 
-    echo "$instance created InstanceId: $instance_id"
+    echo " $? $instance created InstanceId: $instance_id"
 
 
-    #  to get the public ip for frontend and private for remaining instances.
-
-    # if($instance -eq "frontend" ); then
-    
-    #         INSTANCE_IP=$(aws ec2 describe-instances \
-    #           --instance-ids $instance_id \
-    #           --query "Reservations[*].Instances[*].PublicIpAddress" \
-    #           --output text)
-    
-    #     else
-    
-    #         INSTANCE_IP=$(aws ec2 describe-instances \
-    #           --instance-ids $instance_id \
-    #           --query "Reservations[*].Instances[*].PrivateIpAddress" \
-    #           --output text)
-    
-    #     echo "this is the ip $INSTANCE_IP"
-    
-    # fi
-
-    
+    #  to get the public ip for frontend and private for remaining instances
 done
 
