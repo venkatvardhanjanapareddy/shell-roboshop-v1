@@ -43,11 +43,11 @@ validate $? "Adding mongo repo"
 dnf install mongodb-org -y &>> $logs_file
 validate $? "Installing Mongodb server"
 
-systemctl enable mongodb &>> $logs_file
-systemctl start mongodb &>> $logs_file
-validate $? "Enable and start mongodb"
+systemctl enable mongod &>> $logs_file
+systemctl start mongod &>> $logs_file
+validate $? "Enable and start mongod"
 
 sed -i 's/127.0.0.1/0.0.0.0' /etc/mongod.conf
 
-systemctl restart mongodb
-validate $? "Restarting Mongodb"
+systemctl restart mongod
+validate $? "Restarting Mongod"
