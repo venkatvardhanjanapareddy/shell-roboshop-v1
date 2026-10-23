@@ -9,6 +9,8 @@ hosted_zone_id="Z07166913431ZYKE9ODG1"
 for instance in $@
 do
 
+echo "started creating instance for: $instance"
+
     instance_id=$(aws ec2 run-instances \
         --image-id $ami_id \
         --instance-type $instance_type \
@@ -18,6 +20,8 @@ do
         --output text
     )
 
+    echo "instance id is: $instance_id"
+
     if [ $instance != "frontend" ]; then
          IP=$(aws ec2 describe-instances \
             --instance-ids "$instance_id" \
@@ -25,6 +29,7 @@ do
             --output text
         )
         route="$instance.$domain_name"
+        echo "Route name of instance is $route"
     else
         IP=$(aws ec2 describe-instances \
             --instance-ids "$instance_id" \
@@ -32,6 +37,7 @@ do
             --output text
         )
         route="$domain_name"
+        echo "Route name of instance is $route"
     fi
 
 
@@ -56,5 +62,6 @@ do
       ]
     }'
 
+echo "Completed instance creation and routing"
 
 done
