@@ -10,6 +10,7 @@ logs_folder="/var/log/roboshop-v1"
 logs_file="$logs_folder/$0.log"
 
 domain_name="vardhandaws.online"
+scripts_folder=$(realpath "$0")
 
 R="\e[31m"
 G="\e[32m"
@@ -59,8 +60,8 @@ validate $? "Extracting Catalogue files to /app dir"
 npm install &>> $logs_file
 validate $? "Installing dependencies"
 
-sed -i "s/MYDOMAIN/$domain_name/" catalogue.service # replacing with domain name
-cp catalogue.service /etc/systemd/system/catalogue.service
+sed -i "s/MYDOMAIN/$domain_name/" $scripts_folder/catalogue.service # replacing with domain name
+cp $scripts_folder/catalogue.service /etc/systemd/system/catalogue.service
 validate $? "Setting catalogue.service file"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
