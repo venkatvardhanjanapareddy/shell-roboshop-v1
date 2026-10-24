@@ -55,4 +55,4 @@ rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $logs_file
 validate $? "Setting Permissions to roboshop user for RabbitMQ"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
-echo "$(timestamp) [INFO]::Script Completed Execution"
+echo "$(timestamp) [INFO]::Script Completed Execution" | tee -a $logs_file

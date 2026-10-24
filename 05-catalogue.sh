@@ -89,4 +89,4 @@ systemctl restart catalogue
 validate $? "Resarting Catalogue"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
-echo "$(timestamp) [INFO]::Script Completed Execution"
+echo "$(timestamp) [INFO]::Script Completed Execution" | tee -a $logs_file
