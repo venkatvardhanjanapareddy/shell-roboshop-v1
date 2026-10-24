@@ -65,15 +65,15 @@ cp $scripts_folder/catalogue.service /etc/systemd/system/catalogue.service
 validate $? "Setting catalogue.service file"
 
 systemctl daemon-reload
-systemctl enable catalogue
+systemctl enable catalogue &>> $logs_file
 systemctl start catalogue
 validate $? "Enable and Start Catalogue"
 
-cp $scripts_folder/mongo.repo /etc/yum.repos.d/mongo.repo
+cp $scripts_folder/mongo.repo /etc/yum.repos.d/mongo.repo &>> $logs_file
 validate $? "Copying mongo.repo file"
 
-dnf install mongodb-mongosh -y
-validate $? "Installing mongodv client"
+dnf install mongodb-mongosh -y &>> $logs_file
+validate $? "Installing mongodb client"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
