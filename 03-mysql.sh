@@ -8,7 +8,7 @@ logs_file="$logs_folder/$0.log"
 
 R="\e[31m"
 G="\e[32m"
-B="\e[33m"
+Y="\e[33m"
 N="\e[0m"
 
 timestamp(){
