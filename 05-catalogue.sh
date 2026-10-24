@@ -64,5 +64,16 @@ sed -i "s/MYDOMAIN/$domain_name/" $scripts_folder/catalogue.service # replacing 
 cp $scripts_folder/catalogue.service /etc/systemd/system/catalogue.service
 validate $? "Setting catalogue.service file"
 
+systemctl daemon-reload
+systemctl enable catalogue
+systemctl start catalogue
+validate $? "Enable and Start Catalogue"
+
+cp $scripts_folder/mongo.repo /etc/yum.repos.d/mongo.repo
+validate $? "Copying mongo.repo file"
+
+dnf install mongodb-mongosh -y
+validate $? "Installing mongodv client"
+
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
