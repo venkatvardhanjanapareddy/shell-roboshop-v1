@@ -33,7 +33,7 @@ validate(){
 
 echo "$(timestamp) [INFO]::Script Started Execution"
 
-cp .04-rabbitmq.sh /etc/yum.repos.d/rabbitmq.repo
+cp 04-rabbitmq.sh /etc/yum.repos.d/rabbitmq.repo
 validate $? "Adding rabbitMQ repo"
 
 
