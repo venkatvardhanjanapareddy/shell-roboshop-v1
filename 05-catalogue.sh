@@ -40,7 +40,7 @@ if [ $? -ne 0 ]; then
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 validate $? "Adding roboshop system user"
 else 
-echo "roboshop user already exists.. ${Y}SKIPPING${N}"
+echo -e "roboshop user already exists.. ${Y}SKIPPING${N}"
 fi
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
