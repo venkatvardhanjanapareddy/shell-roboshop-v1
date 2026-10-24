@@ -11,6 +11,11 @@ G="\e[32m"
 B="\e[33m"
 N="\e[0m"
 
+timestamp(){
+    date "+%F %T"
+}
+
+
 if [ $user -ne 0 ]; then 
     echo -e "${R}ERROR::${N} Try with sudo access"
     exit 1
@@ -19,10 +24,6 @@ else
 fi
 
 mkdir -p $logs_folder
-
-timestamp(){
-    date "+%F %T"
-}
 
 validate(){
     if [ $1 -ne 0 ]; then 
