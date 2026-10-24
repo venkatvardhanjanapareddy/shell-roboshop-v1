@@ -3,7 +3,7 @@ user_id=$(id -u)
 
 # Declare log folder and file path
 
-logs_folder="/var/log/roboshop-shellv1"
+logs_folder="/var/log/roboshop-v1"
 logs_file="${logs_folder}/${0}.log"
 
 # sudo user condition

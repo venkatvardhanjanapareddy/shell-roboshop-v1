@@ -5,7 +5,6 @@ user=$(id -u)
 $logs_folder="/var/log/roboshop-v1"
 $logs_file="$logs_folder/$0.log"
 
-mkdir -p $logs_folder
 
 R="\e[31m"
 G="\e[32m"
@@ -19,11 +18,13 @@ else
     echo "Script Started running"
 fi
 
+mkdir -p $logs_folder
+
 validate(){
     if [ $1 -ne 0]; then 
-    echo -e "${R}ERROR::${N} $2" | tee $logs_file
+    echo -e "${R}ERROR::${N} $2" | tee -a $logs_file
     else
-    echo -e "${G}SUCCESS::${N} $2" | tee $logs_file
+    echo -e "${G}SUCCESS::${N} $2" | tee -a $logs_file
     fi
 }
 
