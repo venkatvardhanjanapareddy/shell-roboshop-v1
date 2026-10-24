@@ -44,7 +44,7 @@ echo -e "$(timestamp) [INFO]::roboshop user already exists.. ${Y}SKIPPING${N}"
 fi
 
 mkdir -p /app
-curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
+curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip &>> $logs_file
 validate $? "Installing Catalogue resource zip file"
 
 cd /app
