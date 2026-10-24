@@ -73,5 +73,25 @@ validate $? "Installing dependencies"
 mv target/shipping.jar shipping.jar
 validate $? "moving shipping.jar file"
 
+dnf install mysql -y &>> $logs_file
+validate $? "Installing mysql client"
+
+cities_count=$(mysql -u root -p'RoboShop@1' -sN -e "SELECT COUNT(*) FROM cities.cities;")
+if [ $cities_count -eq 0 ]; then
+mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/master-data.sql
+validate $? "Installing master data for cities"
+else 
+echo "$(timestamp) [INFO]::Cities data exist.. ${Y}SKIPPING${N}"
+fi
+
+sed -i "s/MYDOMAIN/$domain_name" $scripts_folder/shipping.service &>> $logs_file
+cp $scripts_folder/shipping.service /etc/systemd/system/shipping.service
+validate $? "Setting up shipping servie file"
+
+systemctl daemon-reload
+systemctl enable shipping &>> $logs_file
+systemctl start shipping &>> $logs_file
+validate $? "Enbable and start shipping"
+
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution" | tee -a $logs_file
