@@ -43,7 +43,7 @@ systemctl enable rabbitmq-server &>> $logs_file
 systemctl start rabbitmq-server &>> $logs_file
 validate $? "Enable and Starting RabbitMQ"
 
-rabbitmqctl add_user roboshop roboshop123 &>> $log_files
+rabbitmqctl add_user roboshop roboshop123 &>> $logs_file
 validate $? "Adding roboshop user"
 
 echo "$(timestamp) [INFO]::Script Completed Execution"
