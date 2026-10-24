@@ -78,8 +78,14 @@ validate $? "Installing mongodb client"
 product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()')
 validate $? "Checking product count $product_count"
 
-# mongosh --host "mongodb.$domain_name" </app/db/master-data.js
-# validate $? "Loading master data"
+if [ $product_count -eq 0 ]; then
+mongosh --host "mongodb.$domain_name" </app/db/master-data.js
+validate $? "Loading master data"
+else 
+echo  -e "$(timestamp) [INFO]::Products already loaded.. &{Y}SKIPPING${N}"
+
+systemctl restart 
+validate $? "Resarting Catalogue"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
