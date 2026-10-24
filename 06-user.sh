@@ -42,6 +42,7 @@ validate $? "Installing nodejs:24"
 id roboshop &>> $logs_file
 if [ $? -ne 0 ]; then 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+validate $? "System user roboshop created"
 else
 echo -e "System user roboshop already exists.. ${Y}SKIPPING${N}"
 fi
