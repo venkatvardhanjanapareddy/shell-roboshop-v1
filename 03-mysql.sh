@@ -19,19 +19,19 @@ timestamp(){
 if [ $user -ne 0 ]; then 
     echo -e "${R}ERROR::${N} Try with sudo access"
     exit 1
-else 
-    echo "$(timestamp)::Script Started Execution"
 fi
 
 mkdir -p $logs_folder
 
 validate(){
     if [ $1 -ne 0 ]; then 
-    echo -e "$(timestamp):: ${R}ERROR${N}:: $2" | tee -a $logs_file
+    echo -e "$(timestamp) [ERROR]:: ${R}ERROR${N}:: $2" | tee -a $logs_file
     else
-    echo -e "$(timestamp):: ${G}SUCCESS${N}:: $2" | tee -a $logs_file
+    echo -e "$(timestamp) [INFO]:: ${G}SUCCESS${N}:: $2" | tee -a $logs_file
     fi
 }
+
+echo "$(timestamp) [INFO]::Script Started Execution"
 
 dnf module enable mysql:8.4 -y &>> $logs_file
 dnf install mysql-server -y &>> $logs_file
@@ -44,4 +44,5 @@ validate $? "Enable and Start mysqld"
 mysql_secure_installation --set-root-pass RoboShop@1
 validate $? "Setting root-password"
 
-echo "$(timestamp)::Script Completed Execution"
+echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
+echo "$(timestamp) [INFO]::Script Completed Execution"
