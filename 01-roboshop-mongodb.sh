@@ -47,7 +47,7 @@ systemctl enable mongod &>> $logs_file
 systemctl start mongod &>> $logs_file
 validate $? "Enable and start mongod"
 
-sed -i 's/127.0.0.1/0.0.0.0' /etc/mongod.conf
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 
 systemctl restart mongod
 validate $? "Restarting Mongod"
