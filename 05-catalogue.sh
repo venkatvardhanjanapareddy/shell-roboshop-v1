@@ -48,7 +48,7 @@ curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/robosho
 validate $? "Installing Catalogue resource zip file"
 
 cd /app
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $logs_file
 validate $? "Extracting Catalogue files to /app dir"
 
 
