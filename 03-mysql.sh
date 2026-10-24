@@ -2,8 +2,8 @@
 
 user=$(id -u)
 
-$logs_folder="/var/log/roboshop-v1"
-$logs_file="$logs_folder/$0.log"
+logs_folder="/var/log/roboshop-v1"
+logs_file="$logs_folder/$0.log"
 
 
 R="\e[31m"
