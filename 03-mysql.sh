@@ -21,7 +21,7 @@ fi
 mkdir -p $logs_folder
 
 timestamp(){
-    date +%F %T
+    date "+%F %T"
 }
 
 validate(){
