@@ -43,7 +43,12 @@ systemctl enable rabbitmq-server &>> $logs_file
 systemctl start rabbitmq-server &>> $logs_file
 validate $? "Enable and Starting RabbitMQ"
 
-rabbitmqctl add_user roboshop roboshop123 &>> $logs_file
-validate $? "Adding roboshop user"
+rabbitmqctl list_users | grep roboshop
+if [ $? -ne 0 ]; then
+    rabbitmqctl add_user roboshop roboshop123 &>> $logs_file
+    validate $? "Adding roboshop user"
+else
+    echo "roboshop user exists.. ${G}SKIPPING${N}"
+fi
 
 echo "$(timestamp) [INFO]::Script Completed Execution"
