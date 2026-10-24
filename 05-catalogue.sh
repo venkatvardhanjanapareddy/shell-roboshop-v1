@@ -30,6 +30,14 @@ validate(){
 
 echo "$(timestamp) [INFO]::Script Started Execution"
 
+dnf module disable nodejs -y &>> $logs_file
+dnf module enable nodejs:24 -y &>> $logs_file
+dnf install nodejs -y &>> $logs_file
+validate $? "Installing Nodejs"
+
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+validate $? "Adding roboshop system user"
+
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
