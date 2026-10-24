@@ -76,7 +76,7 @@ dnf install mongodb-mongosh -y &>> $logs_file
 validate $? "Installing mongodb client"
 
 product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()')
-validate $? "Checking product count $product_count"
+validate $? "Checking product count: $product_count"
 
 if [ "$product_count" -eq 0 ]; then
 mongosh --host "mongodb.$domain_name" </app/db/master-data.js
@@ -85,7 +85,7 @@ else
 echo  -e "$(timestamp) [INFO]::Products already loaded.. &{Y}SKIPPING${N}"
 fi
 
-systemctl restart 
+systemctl restart catalogue
 validate $? "Resarting Catalogue"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
