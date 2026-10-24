@@ -75,5 +75,11 @@ validate $? "Copying mongo.repo file"
 dnf install mongodb-mongosh -y &>> $logs_file
 validate $? "Installing mongodb client"
 
+product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()')
+validate $? "Checking product count $product_count"
+
+# mongosh --host "mongodb.$domain_name" </app/db/master-data.js
+# validate $? "Loading master data"
+
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
