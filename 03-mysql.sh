@@ -15,10 +15,14 @@ if [ $user -ne 0 ]; then
     echo -e "${R}ERROR::${N} Try with sudo access"
     exit 1
 else 
-    echo "Script Started running"
+    echo "$(timestamp)::Script Started Execution"
 fi
 
 mkdir -p $logs_folder
+
+timestamp(){
+    date +%F %T
+}
 
 validate(){
     if [ $1 -ne 0 ]; then 
@@ -36,3 +40,4 @@ systemctl enable mysqld &>> $logs_file
 systemctl start mysqld &>> $logs_file
 validate $? "Enable and Start mysqld"
 
+echo "$(timestamp)::Script Completed Execution"
