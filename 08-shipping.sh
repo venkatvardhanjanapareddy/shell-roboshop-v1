@@ -41,7 +41,7 @@ validate $? "Installing maven and java:25"
 alternatives --set java "/usr/lib/jvm/java-25-openjdk/bin/java"
 validate $? "Set java version 25"
 
-echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f /usr/bin/java)))" > /etc/profile.d/java.sh
+echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f /usr/bin/java)))" > /etc/profile.d/java.sh | tee -a $logs_file
 source /etc/profile.d/java.sh
 echo $JAVA_HOME
 validate $? "Set JAVA_HOME for maven"
@@ -54,6 +54,24 @@ else
 echo -e "System user roboshop exists.. ${Y}SKIPPING${N}"
 fi
 
+rm -rf /app
+validate $? "Removing old code"
+
+mkdir /app
+validate $? "Creating /app dir"
+
+curl -L -o /tmp/shipping.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/shipping-v4.zip &>> $logs_file
+validate $? "Installing shipping zip file"
+
+cd /app
+unzip /tmp/shipping.zip &>> $logs_file
+validate $? "Unzipping shipping files to app dir"
+
+mvn clean package &>> $logs_file
+validate $? "Installing dependencies"
+
+mv target/shipping.jar shipping.jar
+validate $? "moving shipping.jar file"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution" | tee -a $logs_file
