@@ -38,7 +38,21 @@ dnf module enable maven:3.9 -y &>> $logs_file
 dnf install maven java-25-openjdk-devel -y &>> $logs_file
 validate $? "Installing maven and java:25"
 
-# alternatives --set java 
+alternatives --set java "/usr/lib/jvm/java-25-openjdk/bin/java"
+validate $? "Set java version 25"
+
+echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f /usr/bin/java)))" > /etc/profile.d/java.sh
+source /etc/profile.d/java.sh
+echo $JAVA_HOME
+validate $? "Set JAVA_HOME for maven"
+
+id roboshop &>> $logs_file
+if [ $? -ne 0 ]; then
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+validate $? "System user roboshop created"
+else 
+echo -e "System user roboshop exists.. ${Y}SKIPPING${N}"
+fi
 
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
