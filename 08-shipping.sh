@@ -76,13 +76,16 @@ validate $? "moving shipping.jar file"
 dnf install mysql -y &>> $logs_file
 validate $? "Installing mysql client"
 
-cities_count=$(mysql -u root -p'RoboShop@1' -sN -e "SELECT COUNT(*) FROM cities.cities;")
-if [ $cities_count -eq 0 ]; then
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/master-data.sql
+cities_count=$(mysql -h "mysql.$domain_name" -u root -p'RoboShop@1' -sN -e "SELECT COUNT(*) FROM cities.cities;") 2>> $logs_file
+if [ -z "$cities_count" ] || [ "$cities_count" -eq 0 ]; then
+mysql -h "mysql.$domain_name" -uroot -pRoboShop@1 < /app/db/master-data.sql
 validate $? "Installing master data for cities"
 else 
-echo "$(timestamp) [INFO]::Cities data exist.. ${Y}SKIPPING${N}"
+echo -e "$(timestamp) [INFO]::Cities data exist.. ${Y}SKIPPING${N}"
 fi
+
+mysql -h "mysql.$domain_name" -uroot -pRoboShop@1 < /app/db/app-user.sql
+validate $? "Creating app user"
 
 sed -i "s/MYDOMAIN/$domain_name" $scripts_folder/shipping.service &>> $logs_file
 cp $scripts_folder/shipping.service /etc/systemd/system/shipping.service
