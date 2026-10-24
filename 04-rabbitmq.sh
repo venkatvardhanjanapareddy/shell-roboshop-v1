@@ -51,7 +51,8 @@ else
     echo -e "$(timestamp) [INFO]::roboshop user exists.. ${Y}SKIPPING${N}"
 fi
 
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $logs_file
+validate $? "Setting Permissions to roboshop user for RabbitMQ"
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
