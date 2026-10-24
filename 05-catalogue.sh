@@ -10,7 +10,7 @@ logs_folder="/var/log/roboshop-v1"
 logs_file="$logs_folder/$0.log"
 
 domain_name="vardhandaws.online"
-scripts_folder=$(realpath "$0")
+scripts_folder=$(dirname "$(realpath "$0")")
 
 R="\e[31m"
 G="\e[32m"
