@@ -36,11 +36,11 @@ echo "$(timestamp) [INFO]::Script Started Execution"
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 validate $? "Adding rabbitMQ repo /etc/yum.repos.d/rabbitmq.repo"
 
-dnf install erlang rabbitmq-server -y
+dnf install erlang rabbitmq-server -y &>> $logs_file
 validate $? "Installing RabbitMQ"
 
-systemctl enable rabbitmq-server
-systemctl start rabbitmq-server
+systemctl enable rabbitmq-server &>> $logs_file
+systemctl start rabbitmq-server &>> $logs_file
 validate $? "Enable and Starting RabbitMQ"
 
 
