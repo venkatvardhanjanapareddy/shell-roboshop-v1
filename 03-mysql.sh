@@ -27,9 +27,9 @@ mkdir -p $logs_folder
 
 validate(){
     if [ $1 -ne 0 ]; then 
-    echo -e "$(timestamp):: ${R}ERROR::${N} $2" | tee -a $logs_file
+    echo -e "$(timestamp):: ${R}ERROR${N}:: $2" | tee -a $logs_file
     else
-    echo -e "$(timestamp):: ${G}SUCCESS::${N} $2" | tee -a $logs_file
+    echo -e "$(timestamp):: ${G}SUCCESS${N}:: $2" | tee -a $logs_file
     fi
 }
 
@@ -40,5 +40,8 @@ validate $? "Installing Mysql Server"
 systemctl enable mysqld &>> $logs_file
 systemctl start mysqld &>> $logs_file
 validate $? "Enable and Start mysqld"
+
+mysql_secure_installation --set-root-pass RoboShop@1
+validate $? "Setting root-password"
 
 echo "$(timestamp)::Script Completed Execution"
