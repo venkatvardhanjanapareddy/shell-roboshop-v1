@@ -40,8 +40,17 @@ if [ $? -ne 0 ]; then
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 validate $? "Adding roboshop system user"
 else 
-echo -e "roboshop user already exists.. ${Y}SKIPPING${N}"
+echo -e "$(timestamp) [INFO]::roboshop user already exists.. ${Y}SKIPPING${N}"
 fi
+
+mkdir -p /app
+curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
+validate $? "Installing Catalogue resource zip file"
+
+cd /app
+unzip /tmp/catalogue.zip
+validate $? "Extracting Catalogue files to /app dir"
+
 
 echo "$(timestamp) [INFO]::Script completed execution in $SECONDS seconds"
 echo "$(timestamp) [INFO]::Script Completed Execution"
