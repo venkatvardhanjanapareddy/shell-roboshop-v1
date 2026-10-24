@@ -30,4 +30,9 @@ validate(){
 
 dnf module enable mysql:8.4 -y &>> $logs_file
 dnf install mysql-server -y &>> $logs_file
-validate $? "Installing and Enabling Mysql Server"
+validate $? "Installing Mysql Server"
+
+systemctl enable mysqld &>> $logs_file
+systemctl start mysqld &>> $logs_file
+validate $? "Enable and Start mysqld"
+
