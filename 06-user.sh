@@ -35,7 +35,7 @@ validate(){
 echo "$(timestamp) [INFO]::Script Started Execution"
 
 dnf module disable nodejs -y &>> $logs_file
-dnf module enable nodejs-24 -y &>> $logs_file
+dnf module enable nodejs:24 -y &>> $logs_file
 dnf module start nodejs -y &>> $logs_file
 validate $? "Installing nodejs:24"
 
