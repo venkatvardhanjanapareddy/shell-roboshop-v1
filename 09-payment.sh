@@ -34,7 +34,7 @@ validate(){
 
 echo "$(timestamp) [INFO]::Script Started Execution" | tee -a $logs_file
 
-dnf install python3.14 python3.14-pip -y
+dnf install python3.14 python3.14-pip -y &>> $logs_file
 validate $? "Installing python3.14"
 
 id roboshop
@@ -51,17 +51,17 @@ validate $? "Removing old code"
 mkdir /app
 validate $? "Creating /app dir"
 
-curl -L -o /tmp/payment.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/payment-v4.zip
+curl -L -o /tmp/payment.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/payment-v4.zip  &>> $logs_file
 validate $? "Donwloading payment zip in /tmp dir"
 
 cd /app
 unzip /tmp/payment.zip
 validate $? "Unzipping files in /app dir"
 
-python3.14 -m venv /app/.venv
+python3.14 -m venv /app/.venv  &>> $logs_file
 validate $? "Installing depedencies, libraries"
 
-/app/.venv/bin/pip install -r requirements.txt
+/app/.venv/bin/pip install -r requirements.txt  &>> $logs_file
 validate $? "Installing requirements.txt"
 
 sed -i "s/MYDOMAIN/$domain_name/g" $scripts_folder/payment.service
@@ -69,7 +69,7 @@ cp $scripts_folder/payment.service /etc/systemd/system/payment.service
 validate $? "Copying the payment.service file"
 
 systemctl daemon-reload
-systemctl enable payment
+systemctl enable payment  &>> $logs_file
 systemctl start payment
 validate $? "Enable and Restart Payment"
 
