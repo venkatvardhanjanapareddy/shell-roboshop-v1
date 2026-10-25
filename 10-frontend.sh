@@ -63,7 +63,7 @@ validate $? "Unzipping files in /usr/share/nginx/html"
 
 sed -i "s/MYDOMAIN/$domain_name/g" $scripts_directory/roboshop.conf
 cp $scripts_directory/roboshop.conf /etc/nginx/default.d/roboshop.conf
-validate $? "Copying oroboshop.conf"
+validate $? "Copying roboshop.conf"
 
 nginx -t &>> $logs_file
 validate $? "Checking conf syntax for nginx"
