@@ -55,7 +55,7 @@ curl -L -o /tmp/payment.zip https://raw.githubusercontent.com/daws-92s/roboshop-
 validate $? "Donwloading payment zip in /tmp dir"
 
 cd /app
-unzip /tmp/payment.zip
+unzip /tmp/payment.zip &>> $logs_file
 validate $? "Unzipping files in /app dir"
 
 python3.14 -m venv /app/.venv  &>> $logs_file
